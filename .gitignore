@@ -1,0 +1,15 @@
+# ignore compiled files
+__pycache__/
+
+
+# ignore output files
+*.json
+*.csv
+
+
+# unnecessary file
+binary_search_tree.py
+
+
+# ignore log files
+*.txt.*
