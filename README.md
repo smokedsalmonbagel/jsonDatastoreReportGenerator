@@ -44,11 +44,11 @@ The scripts assumes the following:
 
 - The timestamp for each row is in ISO format.
 
-- All the log files can be found in the root fo the supplied location [-L]. The script does not search for sub directories
+- All the log files can be found in the root of the supplied location [-L]. The script does not search for sub directories
 
 ## Aggregation and Missing Data
 
-The script collects data for specified fields starting and ending at user specified dates. If it finds data to be missing for a field on any date, it simply returns `'None'`. It then creates `[-D]` segments of length corresponding to `[-P]`. Because, the script anticipates data logged per second, `P == min` means segments of lenth, 60 and `P == hr` means segments of length, 3600. The script then omits `'None'` values in each segment and returns the aritmetic mean of all the values in the segment. All results are returned as 2 decimal floats.
+The script collects data for specified fields starting and ending at user specified dates. If it finds data to be missing for a field on any date, it simply returns `'None'`. It then creates `[-D]` segments of length corresponding to `[-P]`. Because, the script anticipates data logged per minute, `P == min` means segments of lenth, 1 and `P == hr` means segments of length, 60. The script then omits `'None'` values in each segment and returns the aritmetic mean of all the values in the segment. All results are returned as 2 decimal floats.
 
 ## Output
 
