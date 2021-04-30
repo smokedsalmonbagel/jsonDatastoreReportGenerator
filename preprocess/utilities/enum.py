@@ -7,12 +7,11 @@ def do_nothing(foo: any) -> None:
     pass
 
 class Interval(IntEnum):
-    seconds = 1
-    minutes = 60
-    hours = 3600
-    days = 25200
-    weeks = 604800
-    months = 2592000
+    minutes = 1
+    hours = 60
+    days = 1440
+    weeks = 10080
+    months = 43200
 
 
 class Print_to_File(Enum):

@@ -8,6 +8,7 @@ from datetime import datetime
 class Parser():
     def __init__(self, file_list: list, data: dict) -> None:
         self.__file_list = file_list
+        self.__root_dir = data['location']
         self.__interv = data['interval']
         self.__count = data['count']
         self.__fields = data['fields']
@@ -23,12 +24,13 @@ class Parser():
             "data": self.__mutated
         }
         
-        self.out = json.dumps(self.__result)
         self.__print_to_file(self.__fmt, self.__result)
+        self.out = self.__result
 
 
     def __load_data(self):
-        files = [self.__get_file_name(f) for f in self.__file_list]
+        # files = [self.__get_file_name(f) for f in self.__file_list]
+        files = [self.__root_dir + "/" + f for f in self.__file_list]
 
         for file_ in files:
             with open(file_, 'r') as f:
@@ -42,7 +44,6 @@ class Parser():
         filename = os.path.abspath(os.path.realpath(filename))
         return filename
 
-    
     def __resample(self):
         fields_data = self.__store
         all_data = self.__load_data()
@@ -53,7 +54,7 @@ class Parser():
                 
                 if json_data["type"] == "print_reading":
                     [fields_data[x].append(json_data[x]) if x in json_data else fields_data[x].append("None") for x in self.__fields]
-
+        
         self.__resampled = fields_data
 
     
@@ -66,6 +67,10 @@ class Parser():
         
         for field in self.__fields:
             dat = data[field]
+
+            if length > len(dat):
+                raise Exception("Requested data is more than available data")
+
             segments = [dat[x: x+factor_] for x in range(0, length, factor_)]
             yield({
                 field: segments

@@ -3,14 +3,15 @@ from .errors import IncompatibleDatesError, InvalidDateError, InvalidIntervalErr
 
 
 class Validator():
-    def __init__(self, start: str, end: str, interval: str, duration: int, fields: list, fmt: any):
-        self.__start = start
-        self.__end = end
-        self.__interval = interval
-        self.__duration = duration
-        self.__fields = fields
+    def __init__(self, cli_obj: dict):
+        self.__start = cli_obj["start_date"]
+        self.__end = cli_obj["end_date"]
+        self.__interval = cli_obj["interval"]
+        self.__duration = cli_obj["duration"]
+        self.__fields = cli_obj["fields"]
         self.__fields.insert(0, "pitime")
-        self.__fmt = fmt
+        self.__fmt = cli_obj["format_"]
+        self.__dir = cli_obj["location"].replace("\\", "/")
 
     def validate(self):
         is_start_valid = self.__is_Valid_Date(self.__start)
@@ -26,7 +27,8 @@ class Validator():
             "interval": is_interv_valid,
             "count": self.__duration,
             "fields": self.__fields,
-            "output_format": self.__fmt
+            "output_format": self.__fmt,
+            "location": self.__dir
         }
 
         return result

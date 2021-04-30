@@ -6,6 +6,7 @@ class Preprocess():
         self.start = obj['start date']
         self.end = obj['end date']
         self.interv = obj['interval']
+        self.__dir = obj['location']
 
     def __stringify(self) -> None:
         start = self.start.strftime("%Y%m%dT%H%M%S")
@@ -13,7 +14,7 @@ class Preprocess():
         self.dates = (start.replace("T", "_"), end.replace("T", "_"))
 
     def __get_search_terms(self) -> None:
-        file_list = get_files()
+        file_list = get_files(self.__dir)
         start_date = self.dates[0]
         end_date = self.dates[1]
 
